@@ -13,12 +13,12 @@ public class StarGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("fon.jpg");
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(0.5f, 0.6f, 0.4f, 1);
+		Gdx.gl.glClearColor(0, 0.02184f, 0.10943f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 100, 100);
