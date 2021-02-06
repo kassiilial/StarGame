@@ -20,7 +20,7 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("fon.jpg");
         touch = new Vector2(0, 0);
-        dot_for_img = new Vector2(1,1);
+        dot_for_img = new Vector2();
     }
 
     @Override
