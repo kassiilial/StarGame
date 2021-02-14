@@ -3,13 +3,16 @@ package game.stargame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import game.stargame.base.BaseScreen;
 import game.stargame.math.Rect;
 import game.stargame.sprite.Background;
 import game.stargame.sprite.Star;
+import game.stargame.sprite.StarShip;
 
 
 public class GameScreen extends BaseScreen {
@@ -21,6 +24,9 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private static final  int starCount = 64;
 
+    private StarShip starShip;
+
+
     @Override
     public void show() {
         super.show();
@@ -31,6 +37,10 @@ public class GameScreen extends BaseScreen {
         for (int i=0; i<starCount; i++) {
             stars[i] = new Star(atlas);
         }
+        starShip = new StarShip(atlas);
+
+
+
     }
 
     @Override
@@ -47,6 +57,7 @@ public class GameScreen extends BaseScreen {
         for (Star star:stars) {
             star.resize(worldBounds);
         }
+        starShip.resize(worldBounds);
     }
 
     @Override
@@ -90,6 +101,7 @@ public class GameScreen extends BaseScreen {
         for (Star star:stars) {
             star.draw(batch);
         }
+        starShip.draw(batch);
         batch.end();
 
     }
