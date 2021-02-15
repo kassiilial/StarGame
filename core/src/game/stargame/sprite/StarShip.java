@@ -12,10 +12,12 @@ public class StarShip extends Sprite {
 
     private static final float hieght = 0.2f;
     private static final float padding = 0.03f;
+    public TextureRegion ship;
 
 
     public StarShip(TextureAtlas atlas) {
-        super(atlas.findRegion("main_ship"));
+        super(new TextureRegion(atlas.findRegion("main_ship"), 0 ,0 , atlas.findRegion("main_ship").getRegionWidth()/2, atlas.findRegion("main_ship").getRegionHeight()));
+
     }
 
 
