@@ -1,6 +1,9 @@
 package game.stargame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+
+
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,6 +30,9 @@ public class GameScreen extends BaseScreen {
 
     private MainShip mainShip;
 
+    private Music music;
+
+
     @Override
     public void show() {
         super.show();
@@ -39,7 +45,13 @@ public class GameScreen extends BaseScreen {
         }
         bulletPool = new BulletPool();
         mainShip = new MainShip(atlas, bulletPool);
-    }
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/music.mp3"));
+        music.setVolume(0.5f);
+        music.setLooping(true);
+
+
+        }
+
 
     @Override
     public void render(float delta) {
@@ -57,6 +69,7 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
+        music.play();
     }
 
     @Override
@@ -64,6 +77,7 @@ public class GameScreen extends BaseScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        music.dispose();
         super.dispose();
     }
 
@@ -116,4 +130,6 @@ public class GameScreen extends BaseScreen {
         batch.end();
 
     }
+
+
 }
