@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import game.stargame.base.BaseScreen;
 import game.stargame.math.Rect;
+import game.stargame.pool.BulletPool;
 import game.stargame.sprite.Background;
+import game.stargame.sprite.MainShip;
 import game.stargame.sprite.Star;
 
 
@@ -21,6 +23,10 @@ public class GameScreen extends BaseScreen {
     private Star[] stars;
     private static final  int starCount = 64;
 
+    private BulletPool bulletPool;
+
+    private MainShip mainShip;
+
     @Override
     public void show() {
         super.show();
@@ -31,11 +37,14 @@ public class GameScreen extends BaseScreen {
         for (int i=0; i<starCount; i++) {
             stars[i] = new Star(atlas);
         }
+        bulletPool = new BulletPool();
+        mainShip = new MainShip(atlas, bulletPool);
     }
 
     @Override
     public void render(float delta) {
         update(delta);
+        freeAllDestroyed();
         draw();
     }
 
@@ -47,32 +56,38 @@ public class GameScreen extends BaseScreen {
         for (Star star:stars) {
             star.resize(worldBounds);
         }
+        mainShip.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
         bg.dispose();
         atlas.dispose();
+        bulletPool.dispose();
         super.dispose();
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
+        mainShip.touchDown(touch, pointer, button);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
+        mainShip.touchUp(touch, pointer, button);
         return false;
     }
 
     @Override
     public boolean keyDown(int keycode) {
+        mainShip.keyDown(keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        mainShip.keyUp(keycode);
         return false;
     }
 
@@ -80,8 +95,14 @@ public class GameScreen extends BaseScreen {
         for (Star star:stars) {
             star.update(delta);
         }
+        mainShip.update(delta);
+        bulletPool.updateActiveSprites(delta);
 
     }
+    private void freeAllDestroyed() {
+        bulletPool.freeAllDestroyedActiveSprites();
+    }
+
     private void draw () {
         Gdx.gl.glClearColor(0, 0.02184f, 0.10943f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -90,6 +111,8 @@ public class GameScreen extends BaseScreen {
         for (Star star:stars) {
             star.draw(batch);
         }
+        mainShip.draw(batch);
+        bulletPool.drawActiveSprites(batch);
         batch.end();
 
     }
