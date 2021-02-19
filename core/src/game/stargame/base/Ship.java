@@ -10,7 +10,7 @@ import game.stargame.sprite.Bullet;
 
 public class Ship extends Sprite{
 
-    protected Vector2 v0;
+    protected Vector2 v0 = new Vector2(0, -0.5f);
     protected Vector2 v;
 
     protected Rect worldBounds;
@@ -40,7 +40,8 @@ public class Ship extends Sprite{
 
     @Override
     public void update(float delta) {
-        pos.mulAdd(v,delta);
+        if (this.getTop() < worldBounds.getTop()) {pos.mulAdd(v,delta);}
+        else {pos.mulAdd(v.cpy().set(0f, -0.7f),delta);}
         reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {
             reloadTimer = 0f;

@@ -15,21 +15,21 @@ public class EnemyEmitter {
     private static final float  enemySmallHeight = 0.1f;
     private static final float  enemySmallBulletHeight = 0.01f;
     private static final int enemySmallBulletDamage = 1;
-    private static final float  enemySmallReloadInterval = 3f;
+    private static final float  enemySmallReloadInterval = 1f;
     private static final int enemySmallHP = 1;
 
 
     private static final float  enemyMediumHeight = 0.15f;
     private static final float  enemyMediumBulletHeight = 0.02f;
     private static final int enemyMediumBulletDamage = 5;
-    private static final float  enemyMediumReloadInterval = 2f;
+    private static final float  enemyMediumReloadInterval = 1.8f;
     private static final int enemyMediumHP = 5;
 
 
     private static final float  enemyBigHeight = 0.2f;
     private static final float  enemyBigBulletHeight = 0.04f;
     private static final int enemyBigBulletDamage = 10;
-    private static final float  enemyBigReloadInterval = 2f;
+    private static final float  enemyBigReloadInterval = 1.9f;
     private static final int enemyBigHP = 10;
 
 
