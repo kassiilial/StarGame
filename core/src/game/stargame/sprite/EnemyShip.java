@@ -8,11 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 import game.stargame.base.Ship;
 import game.stargame.math.Rect;
 import game.stargame.pool.BulletPool;
+import game.stargame.pool.ExplosionPool;
 
 public class EnemyShip extends Ship {
 
-    public EnemyShip(BulletPool bulletPool, Rect worldBounds, Sound sound) {
+    public EnemyShip(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds, Sound sound) {
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.worldBounds = worldBounds;
         this.sound = sound;
         v = new Vector2();
@@ -23,6 +25,10 @@ public class EnemyShip extends Ship {
 
     @Override
     public void update(float delta) {
+        if (getTop() > worldBounds.getTop()) {
+            reloadTimer = reloadInterval * 0.8f;
+        }
+        else if (!v.equals(v0)) {v.set(v0);}
         super.update(delta);
         bulletPos.set(pos.x, pos.y - getHalfHeight());
         if (getBottom()< worldBounds.getBottom()) {
@@ -43,7 +49,7 @@ public class EnemyShip extends Ship {
             int hp
             ) {
         this.regions = regions;
-        this.v.set(v0);
+        this.v0.set(v0);
         this.bulletRegion = bulletRegion;
         this.bulletHeight = bulletHeight;
         this.bulletV.set(bulletV);
@@ -51,8 +57,14 @@ public class EnemyShip extends Ship {
         this.reloadInterval = reloadInreval;
         setHeightProportion(height);
         this.hp = hp;
-
+        v.set(0, -0.3f);
     }
 
+    public boolean isBulletCollision(Rect bullet) {
+        return !(bullet.getRight()<getLeft()||
+                bullet.getLeft()>getRight()||
+                bullet.getBottom()>getTop()||
+                bullet.getTop()< pos.y);
+    }
 
 }

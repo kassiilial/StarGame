@@ -6,15 +6,20 @@ import com.badlogic.gdx.math.Vector2;
 
 import game.stargame.math.Rect;
 import game.stargame.pool.BulletPool;
+import game.stargame.pool.ExplosionPool;
 import game.stargame.sprite.Bullet;
+import game.stargame.sprite.Explosion;
 
 public class Ship extends Sprite{
+
+    private static final float damageAnimatedInterval = 0.1f;
 
     protected Vector2 v0;
     protected Vector2 v;
 
     protected Rect worldBounds;
     protected BulletPool bulletPool;
+    protected ExplosionPool explosionPool;
     protected TextureRegion bulletRegion;
     protected Vector2 bulletV;
     protected Vector2 bulletPos;
@@ -28,6 +33,8 @@ public class Ship extends Sprite{
     protected int hp;
 
     protected Sound sound;
+
+    private float getDamageAnimatedTimer = damageAnimatedInterval;
 
     public Ship() {
 
@@ -46,6 +53,27 @@ public class Ship extends Sprite{
             reloadTimer = 0f;
             shoot();
         }
+        getDamageAnimatedTimer +=delta;
+        if (getDamageAnimatedTimer>damageAnimatedInterval) {frame=0;}
+    }
+    @Override
+    public void destroy() {
+        super.destroy();
+        boom();
+    }
+
+    public void damage(int damage) {
+        hp -=damage;
+        if (hp<=0) {
+            hp = 0;
+            destroy();
+        }
+        frame = 1;
+        getDamageAnimatedTimer = 0f;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     private void shoot() {
@@ -56,5 +84,10 @@ public class Ship extends Sprite{
                 1
         );
         sound.play();
+    }
+
+    private void boom() {
+        Explosion explosion = explosionPool.obtain();
+        explosion.set(getHeight(), pos);
     }
 }
