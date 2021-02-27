@@ -24,6 +24,8 @@ public class MainShip extends Ship {
     private int leftPointer = invalidPointer;
     private int rightPointer = invalidPointer;
 
+    private float xV;
+
 
 
     public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
@@ -167,16 +169,22 @@ public class MainShip extends Ship {
 
     private void moveRight() {
         v.set(v0);
+        this.xV = 0.5f;
     }
 
     private void moveLeft () {
         v.set(v0).rotateDeg(180);
+        this.xV = -0.5f;
+
     }
 
     private void stop () {
         v.setZero();
+        this.xV = 0f;
+
     }
 
-
-
+    public float getxV() {
+        return xV;
+    }
 }

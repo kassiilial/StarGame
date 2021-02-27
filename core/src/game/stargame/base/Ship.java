@@ -42,7 +42,7 @@ public class Ship extends Sprite{
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
-        this.bulletHeight = bulletHeight;
+
     }
 
     @Override
@@ -93,5 +93,9 @@ public class Ship extends Sprite{
     private void boom() {
         Explosion explosion = explosionPool.obtain();
         explosion.set(getHeight(), pos);
+    }
+
+    public Vector2 getV() {
+        return v;
     }
 }

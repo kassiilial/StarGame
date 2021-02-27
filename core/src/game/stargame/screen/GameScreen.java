@@ -26,6 +26,7 @@ import game.stargame.sprite.MainShip;
 import game.stargame.sprite.Message;
 import game.stargame.sprite.NewGame;
 import game.stargame.sprite.Star;
+import game.stargame.sprite.TrackingStar;
 import game.stargame.utils.EnemyEmitter;
 import game.stargame.utils.Font;
 
@@ -40,7 +41,7 @@ public class GameScreen extends BaseScreen {
     private Background background;
 
     private TextureAtlas atlas;
-    private Star[] stars;
+    private TrackingStar[] stars;
     private static final  int starCount = 64;
 
     private BulletPool bulletPool;
@@ -79,10 +80,7 @@ public class GameScreen extends BaseScreen {
         bg = new Texture("texture/bg.png");
         background = new Background(bg);
         atlas = new TextureAtlas(Gdx.files.internal("texture/mainAtlas.tpack"));
-        stars = new Star[starCount];
-        for (int i=0; i<starCount; i++) {
-            stars[i] = new Star(atlas);
-        }
+
         bulletPool = new BulletPool();
         exploisonSound = Gdx.audio.newSound(Gdx.files.internal("sounds/explosion.wav"));
         explosionPool = new ExplosionPool(atlas, exploisonSound);
@@ -90,6 +88,11 @@ public class GameScreen extends BaseScreen {
         enemyPool = new EnemyPool(bulletPool,explosionPool , worldBounds, enemyBulletSound);
         mainShip = new MainShip(atlas, bulletPool, explosionPool);
         newGame = new NewGame(atlas, this);
+
+        stars = new TrackingStar[starCount];
+        for (int i=0; i<starCount; i++) {
+            stars[i] = new TrackingStar(atlas);
+        }
 
         font = new Font("font/font.fnt", "font/font.png");
         font.setSize(fontSize);
@@ -133,7 +136,7 @@ public class GameScreen extends BaseScreen {
     @Override
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
-        for (Star star:stars) {
+        for (TrackingStar star:stars) {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
@@ -191,8 +194,8 @@ public class GameScreen extends BaseScreen {
     }
 
     private void update (float delta) {
-        for (Star star:stars) {
-            star.update(delta);
+        for (TrackingStar star:stars) {
+            star.update(delta, mainShip.getxV());
         }
         explosionPool.updateActiveSprites(delta);
         if (state==State.PLAYING) {
@@ -251,7 +254,7 @@ public class GameScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
-        for (Star star:stars) {
+        for (TrackingStar star:stars) {
             star.draw(batch);
         }
         if (state==State.PLAYING) {

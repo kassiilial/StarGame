@@ -11,7 +11,7 @@ import game.stargame.math.Rnd;
 
 public class Star extends Sprite {
 
-    private final Vector2 v;
+    protected final Vector2 v;
     private Rect worldBounds;
 
     public Star(TextureAtlas atlas) {
@@ -26,6 +26,11 @@ public class Star extends Sprite {
     @Override
     public void update(float delta) {
         pos.mulAdd(v, delta);
+        checkBounds();
+
+    }
+
+    public void checkBounds () {
         if (getRight()<worldBounds.getLeft()) {
             setLeft(worldBounds.getRight());
         }
@@ -35,7 +40,6 @@ public class Star extends Sprite {
         if (getTop()<worldBounds.getBottom()) {
             setBottom(worldBounds.getTop());
         }
-
     }
 
     @Override
