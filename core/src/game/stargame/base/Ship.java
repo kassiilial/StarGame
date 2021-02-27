@@ -86,6 +86,10 @@ public class Ship extends Sprite{
         sound.play();
     }
 
+    public int getHp() {
+        return hp;
+    }
+
     private void boom() {
         Explosion explosion = explosionPool.obtain();
         explosion.set(getHeight(), pos);

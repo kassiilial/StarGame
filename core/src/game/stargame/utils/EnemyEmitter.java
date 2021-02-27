@@ -55,6 +55,8 @@ public class EnemyEmitter {
     private  float generateInterval = 4f;
     private float generateTimer;
 
+    private int level;
+
 
     public EnemyEmitter(TextureAtlas atlas, Rect worldBounds,  EnemyPool enemyPool) {
         this.worldBounds = worldBounds;
@@ -68,7 +70,8 @@ public class EnemyEmitter {
         bulletRegion = atlas.findRegion("bulletEnemy");
     }
 
-    public void generate(float delta) {
+    public void generate(float delta, int frags) {
+        level = frags/10+1;
         generateTimer +=delta;
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
@@ -78,14 +81,14 @@ public class EnemyEmitter {
             enemyShip.set(
                     enemySmallRegions, enemySmallV,
                     bulletRegion, enemySmallBulletHeight,
-                    enemySmallBulletV, enemySmallBulletDamage,
+                    enemySmallBulletV, enemySmallBulletDamage*level,
                     enemySmallReloadInterval, enemySmallHeight,
                     enemySmallHP
             );} else if (enemyType< 0.8f) {
                 enemyShip.set(
                         enemyMediumRegions, enemyMediumV,
                         bulletRegion, enemyMediumBulletHeight,
-                        enemyMediumBulletV, enemyMediumBulletDamage,
+                        enemyMediumBulletV, enemyMediumBulletDamage*level,
                         enemyMediumReloadInterval, enemyMediumHeight,
                         enemyMediumHP);
             }
@@ -93,7 +96,7 @@ public class EnemyEmitter {
                 enemyShip.set(
                         enemyBigRegions, enemyBigV,
                         bulletRegion, enemyBigBulletHeight,
-                        enemyBigBulletV, enemyBigBulletDamage,
+                        enemyBigBulletV, enemyBigBulletDamage*level,
                         enemyBigReloadInterval, enemyBigHeight,
                         enemyBigHP);
             }
@@ -104,4 +107,7 @@ public class EnemyEmitter {
         }
     }
 
+    public int getLevel() {
+        return level;
+    }
 }

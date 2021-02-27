@@ -7,6 +7,9 @@ import game.stargame.math.Rect;
 
 public class Message extends Sprite {
 
+    private static final float height = 0.08f;
+    private static final float top = 0.15f;
+
     public Message(TextureAtlas atlas) {
         super(atlas.findRegion("message_game_over"));
     }
@@ -14,8 +17,7 @@ public class Message extends Sprite {
 
     @Override
     public void resize(Rect worldBounds) {
-        this.pos.set(worldBounds.pos);
-        setHeightProportion(worldBounds.getHeight());
-        setScale(0.07f);
+        setHeightProportion(height);
+        setTop(top);
     }
 }
