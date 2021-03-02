@@ -81,7 +81,7 @@ public class Ship extends Sprite{
         bullet.set(this,
                 bulletRegion, bulletPos, bulletV,
                 bulletHeight, worldBounds,
-                1
+                damage
         );
         sound.play();
     }
